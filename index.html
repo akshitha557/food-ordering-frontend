@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodieHub | Online Food Delivery</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #ff7043;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h1 {
+            font-size: 30px;
+        }
+
+        header p {
+            font-size: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero section */
+        .hero {
+            background: #fff0e9;
+            padding: 45px 6%;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            color: #d84315;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            margin-bottom: 20px;
+        }
+
+        .hero a {
+            display: inline-block;
+            background: #ff7043;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main content */
+        main {
+            width: 90%;
+            max-width: 1150px;
+            margin: 30px auto;
+        }
+
+        .section {
+            margin-bottom: 38px;
+            scroll-margin-top: 20px;
+        }
+
+        .section h2 {
+            margin-bottom: 18px;
+            color: #333;
+        }
+
+        /* Restaurant and food cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(220px, 1fr)
+            );
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px #00000012;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .card p {
+            margin-bottom: 10px;
+            color: #666;
+            overflow-wrap: anywhere;
+        }
+
+        .food-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .food-price {
+            font-size: 19px;
+            color: #e65100;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 10px 15px;
+            background: #ff7043;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e85b30;
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        /* Cart */
+        .cart-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000012;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .cart-item-info h3 {
+            font-size: 17px;
+        }
+
+        .cart-item-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .quantity-controls button {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .quantity {
+            min-width: 22px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .item-subtotal {
+            min-width: 85px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .remove-button {
+            background: #777;
+        }
+
+        .remove-button:hover {
+            background: #555;
+        }
+
+        .cart-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .cart-total {
+            color: #d84315;
+            font-size: 23px;
+        }
+
+        .clear-button {
+            background: #777;
+        }
+
+        /* Checkout */
+        .checkout-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000012;
+        }
+
+        .checkout-section label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: bold;
+        }
+
+        .checkout-section input {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        .help-text {
+            color: #666;
+            font-size: 14px;
+            margin: 7px 0 15px;
+        }
+
+        #checkout-button {
+            margin-top: 12px;
+            padding: 12px 22px;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .message.success {
+            display: block;
+            background: #e5f7e8;
+            color: #176329;
+        }
+
+        .message.error {
+            display: block;
+            background: #ffe8e5;
+            color: #9b1c10;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 40px;
+        }
+
+        /* Mobile screen */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 12px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .cart-item {
+                align-items: flex-start;
+            }
+
+            .item-subtotal {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div>
+            <h1>🍴 FoodieHub</h1>
+            <p>Fresh food, delivered to your door!</p>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#restaurants">Restaurants</a>
+            <a href="#foods">Food Menu</a>
+            <a href="#cart">My Cart</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <h2>Delicious Food, Just a Click Away!</h2>
+        <p>Explore your favourite restaurants and order online.</p>
+        <a href="#foods">Order Food Now</a>
+    </section>
+
+    <main>
+
+        <!-- Restaurants -->
+        <section class="section" id="restaurants">
+            <h2>🏪 Our Restaurants</h2>
+
+            <div id="restaurants-list" class="grid">
+                <p>Loading restaurants...</p>
+            </div>
+        </section>
+
+        <!-- Food menu -->
+        <section class="section" id="foods">
+            <h2>🍕 Delicious Food Menu</h2>
+
+            <div id="foods-list" class="grid">
+                <p>Loading delicious food...</p>
+            </div>
+        </section>
+
+        <!-- Shopping cart -->
+        <section class="section cart-section" id="cart">
+            <h2>🛒 Your Cart</h2>
+
+            <div id="cart-items">
+                <p>Your cart is empty.</p>
+            </div>
+
+            <div class="cart-footer">
+                <h3 class="cart-total">
+                    Total: <span id="cart-total">₹0.00</span>
+                </h3>
+
+                <button
+                    type="button"
+                    class="clear-button"
+                    id="clear-cart-button">
+                    Clear Cart
+                </button>
+            </div>
+        </section>
+
+        <!-- Checkout -->
+        <section class="section checkout-section" id="checkout">
+            <h2>💳 Checkout</h2>
+
+            <label for="customer-id">Customer ID</label>
+
+            <input
+                type="number"
+                id="customer-id"
+                min="1"
+                step="1"
+                placeholder="Enter your customer ID"
+            >
+
+            <p class="help-text">
+                Enter an existing customer ID from your database.
+            </p>
+
+            <button type="button" id="checkout-button">
+                Place Order
+            </button>
+
+            <div
+                id="checkout-message"
+                class="message"
+                role="status"
+                aria-live="polite">
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 FoodieHub | Made with ❤️ for food lovers</p>
+    </footer>
+
+    <!-- Connect to your JavaScript file -->
+    <script src="script.js"></script>
+
+</body>
+</html>
