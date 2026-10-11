@@ -1,5 +1,5 @@
 
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://food-ordering-backend-3-6icz.onrender.com/api";
 
 // Cart data
 let cart = [];
@@ -34,12 +34,12 @@ async function loadRestaurants() {
         const response = await fetch(`${API_BASE}/restaurants`);
 
         if (!response.ok) {
-            throw new Error("Failed to load restaurants");
+            throw new Error(`Failed to load restaurants (${response.status})`);
         }
 
         const restaurants = await response.json();
 
-        if (!restaurants.length) {
+        if (!Array.isArray(restaurants) || restaurants.length === 0) {
             container.innerHTML = "<p>No restaurants found.</p>";
             return;
         }
@@ -73,12 +73,12 @@ async function loadFoods() {
         const response = await fetch(`${API_BASE}/foods`);
 
         if (!response.ok) {
-            throw new Error("Failed to load food items");
+            throw new Error(`Failed to load food items (${response.status})`);
         }
 
         const foods = await response.json();
 
-        if (!foods.length) {
+        if (!Array.isArray(foods) || foods.length === 0) {
             container.innerHTML = "<p>No food items available.</p>";
             return;
         }
@@ -192,7 +192,7 @@ async function renderCart() {
         const response = await fetch(`${API_BASE}/foods`);
 
         if (!response.ok) {
-            throw new Error("Unable to retrieve food prices");
+            throw new Error(`Unable to retrieve food prices (${response.status})`);
         }
 
         const foods = await response.json();
@@ -259,8 +259,7 @@ async function placeOrder() {
         return;
     }
 
-    // Use an existing customer from the database.
-    // Customer ID 1 must exist in the customer table.
+    // This customer ID must exist in the database.
     const customerId = 1;
 
     if (checkoutButton) {
@@ -269,7 +268,6 @@ async function placeOrder() {
     }
 
     try {
-        // Submit each cart item to the backend.
         for (const item of cart) {
             const response = await fetch(`${API_BASE}/orders`, {
                 method: "POST",
@@ -292,7 +290,6 @@ async function placeOrder() {
             }
         }
 
-        // Clear cart only after all requests succeed.
         cart = [];
         await renderCart();
 
